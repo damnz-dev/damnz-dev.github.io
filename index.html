@@ -20,7 +20,6 @@
   --accent: #5eead4;
   --htb-green: #9fef00;
   --htb-ruby: #ff2a5f;
-  --htb-lvl: #a855f7;
   --mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "Segoe UI Mono", Consolas, "Liberation Mono", Menlo, monospace;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -52,14 +51,15 @@ header {
   gap: 1.25rem;
 }
 .header-left { flex: 1; min-width: 0; }
-.header-badge {
-  flex-shrink: 0;
+.header-right {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
 }
 .header-badge img {
   display: block;
-  height: 48px;
+  height: 44px;
   width: auto;
   border-radius: 4px;
   border: 1px solid var(--line);
@@ -71,6 +71,40 @@ header {
   box-shadow: 0 0 12px rgba(159, 239, 0, 0.2);
 }
 .header-badge a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* Selector de idioma puramente CSS */
+#lang-toggle { display: none; }
+.lang-btn {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: #080c11;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0.35rem 0.55rem;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+.lang-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.lang-btn .opt-es, .lang-btn .opt-en { padding: 0 0.15rem; }
+.lang-btn .active { color: var(--accent); }
+
+/* Control de visibilidad de idiomas */
+.en { display: none; }
+#lang-toggle:checked ~ main .es { display: none; }
+#lang-toggle:checked ~ main .en { display: block; }
+#lang-toggle:checked ~ main span.en { display: inline; }
+#lang-toggle:checked ~ main li.en { display: list-item; }
+#lang-toggle:checked ~ main .lang-btn .opt-es { color: var(--muted); }
+#lang-toggle:checked ~ main .lang-btn .opt-en { color: var(--accent); }
+
 .pre {
   margin: 0;
   font: 0.8rem/1.4 var(--mono);
@@ -195,6 +229,7 @@ a:focus-visible {
 @media (max-width: 640px) {
   main { margin: 0; padding: 1.5rem 1.15rem; border: 0; border-radius: 0; }
   .header-top { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .header-right { width: 100%; justify-content: space-between; }
   .htb-banner { grid-template-columns: 1fr; gap: 0.6rem; }
   .htb-stat { border-left-width: 2px; }
   h1 { font-size: 1.5rem; }
@@ -210,7 +245,7 @@ a:focus-visible {
   body { font-size: 7.8pt; line-height: 1.25; }
   main { max-width: none; margin: 0; padding: 0; border: 0; }
   header { padding-bottom: 1.2mm; }
-  .header-badge, .htb-banner { display: none; }
+  .header-badge, .htb-banner, .lang-btn { display: none; }
   h1 { font-size: 13.5pt; margin: 0.5mm 0; }
   .pre { font-size: 7pt; }
   .tagline { font-size: 8pt; }
@@ -226,27 +261,39 @@ a:focus-visible {
 </style>
 </head>
 <body>
+<input type="checkbox" id="lang-toggle" aria-label="Toggle language">
 <main>
   <header>
     <div class="header-top">
       <div class="header-left">
         <p class="pre" aria-hidden="true">$ whoami</p>
         <h1>~/damnz</h1>
-        <p class="tagline"><strong>DAMNZ</strong> · Operador ofensivo · Red Team<span class="cursor" aria-hidden="true"></span></p>
+        <p class="tagline">
+          <span class="es"><strong>DAMNZ</strong> · Operador ofensivo · Red Team</span>
+          <span class="en"><strong>DAMNZ</strong> · Offensive Operator · Red Team</span>
+          <span class="cursor" aria-hidden="true"></span>
+        </p>
       </div>
-      <div class="header-badge">
-        <a href="https://app.hackthebox.com/users/3419151" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer" title="Perfil oficial en Hack The Box">
-          <img src="https://www.hackthebox.com/badge/image/3419151" alt="Hack The Box Badge - Damnz" width="200" height="48">
-        </a>
+      <div class="header-right">
+        <label for="lang-toggle" class="lang-btn" title="Cambiar idioma / Switch language" tabindex="0">
+          <span class="opt-es active">ES</span>/<span class="opt-en">EN</span>
+        </label>
+        <div class="header-badge">
+          <a href="https://app.hackthebox.com/users/3419151" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer" title="Perfil oficial en Hack The Box">
+            <img src="https://www.hackthebox.com/badge/image/3419151" alt="Hack The Box Badge - Damnz" width="200" height="48">
+          </a>
+        </div>
       </div>
     </div>
 
     <!-- Banner superior integrado de Hack The Box -->
     <div class="htb-banner" aria-label="Métricas de Hack The Box">
       <div class="htb-stat">
-        <span class="htb-label">Rango Global</span>
+        <span class="htb-label es">Rango Global</span>
+        <span class="htb-label en">Global Rank</span>
         <span class="htb-value"><span class="green">Pro Hacker</span></span>
-        <span class="htb-sub">Nivel 38 · Skilled</span>
+        <span class="htb-sub es">Nivel 38 · Skilled</span>
+        <span class="htb-sub en">Level 38 · Skilled</span>
       </div>
       <div class="htb-stat">
         <span class="htb-label">Season 12</span>
@@ -254,24 +301,32 @@ a:focus-visible {
         <span class="htb-sub">320 pts · 8 flags</span>
       </div>
       <div class="htb-stat">
-        <span class="htb-label">Racha Activa</span>
-        <span class="htb-value"><span class="cyan">5 Semanas</span></span>
-        <span class="htb-sub">Práctica continua</span>
+        <span class="htb-label es">Racha Activa</span>
+        <span class="htb-label en">Active Streak</span>
+        <span class="htb-value"><span class="cyan es">5 Semanas</span><span class="cyan en">5 Weeks</span></span>
+        <span class="htb-sub es">Práctica continua</span>
+        <span class="htb-sub en">Continuous practice</span>
       </div>
     </div>
   </header>
 
   <section aria-labelledby="h-perfil">
-    <h2 id="h-perfil"><span aria-hidden="true"><span class="ps">$</span> whoami</span><span class="sr">Perfil</span></h2>
+    <h2 id="h-perfil"><span aria-hidden="true"><span class="ps">$</span> whoami</span><span class="sr">Perfil / Profile</span></h2>
     <div>
-      <p>Operador ofensivo y desarrollador de software enfocado en seguridad de sistemas, agentes de IA y computación de bajo nivel. Practico explotación avanzada en Active Directory, entornos Linux y aplicaciones web en Hack The Box, mientras construyo mis propios sistemas: servidores de protocolo de contexto (MCP), flujos multiagente autónomos, arquitecturas concurrentes de alta evasión y firmware bare-metal para microcontroladores.</p>
+      <p class="es">Operador ofensivo y desarrollador de software enfocado en seguridad de sistemas, agentes de IA y computación de bajo nivel. Practico explotación avanzada en Active Directory, entornos Linux y aplicaciones web en Hack The Box, mientras construyo mis propios sistemas: servidores de protocolo de contexto (MCP), flujos multiagente autónomos, arquitecturas concurrentes de alta evasión y firmware bare-metal para microcontroladores.</p>
+      <p class="en">Offensive operator and software engineer focused on systems security, AI agents, and low-level computing. I practice advanced exploitation across Active Directory, Linux environments, and web applications on Hack The Box, while engineering custom infrastructure: Model Context Protocol (MCP) servers, autonomous multi-agent pipelines, high-evasion concurrent architectures, and bare-metal firmware for microcontrollers.</p>
     </div>
   </section>
 
   <section aria-labelledby="h-habilidades">
-    <h2 id="h-habilidades"><span aria-hidden="true"><span class="ps">$</span> cat habilidades.txt</span><span class="sr">Lo que sé hacer</span></h2>
+    <h2 id="h-habilidades">
+      <span class="es" aria-hidden="true"><span class="ps">$</span> cat habilidades.txt</span>
+      <span class="en" aria-hidden="true"><span class="ps">$</span> cat skills.txt</span>
+      <span class="sr">Lo que sé hacer / Skills</span>
+    </h2>
     <div>
-      <ul>
+      <!-- Skills en Español -->
+      <ul class="es">
         <li><strong>Explotación y Active Directory:</strong> vectores sobre infraestructuras Windows/AD: abuso de listas de control de acceso (ACLs, AddSelf, GenericWrite), explotación de servicios de certificados (AD CS), movimiento lateral vía DCOM, ataques a protocolos de resolución local (envenenamiento LLMNR/NBT-NS) y relay NTLM entre protocolos de red.</li>
         <li><strong>Seguridad en Linux y contenedores:</strong> escalada de privilegios local abusando de configuraciones de sudo/GTFOBins, binarios SUID/SGID, Linux capabilities, tareas programadas (cron y path/timers de systemd); y técnicas de escape de contenedores mediante vectores de bind mounts mal configurados.</li>
         <li><strong>Seguridad en aplicaciones web:</strong> descubrimiento y explotación de vectores críticos: falsificación de peticiones del lado del servidor (SSRF), inyección de plantillas (SSTI) hasta ejecución remota de código (RCE), inyecciones SQL apiladas y ciegas, entidades externas XML (XXE in-band) y session poisoning.</li>
@@ -284,27 +339,59 @@ a:focus-visible {
         <li><strong>Computación gráfica y renderizado por software:</strong> álgebra lineal aplicada a proyecciones 3D en perspectiva, matrices de transformación 4x4, descarte de caras ocultas (backface culling) y algoritmos de rasterizado de aristas en bucles de renderizado a tiempo real en C y SDL2.</li>
         <li><strong>Defensa, hardening y auditoría de red:</strong> análisis de superficie de ataque en sockets locales (confinamiento de interfaces 0.0.0.0 a loopback), mitigación de protocolos legados, auditoría de firmware de red doméstica y monitoreo asistido por IA con alertas externas.</li>
       </ul>
+
+      <!-- Skills en Inglés -->
+      <ul class="en">
+        <li><strong>Exploitation & Active Directory:</strong> attack vectors on Windows/AD environments: Access Control List abuse (ACLs, AddSelf, GenericWrite), Active Directory Certificate Services (AD CS) exploitation, lateral movement via DCOM, local name resolution poisoning (LLMNR/NBT-NS), and cross-protocol NTLM relaying.</li>
+        <li><strong>Linux & Container Security:</strong> local privilege escalation exploiting sudo/GTFOBins misconfigurations, SUID/SGID binaries, Linux capabilities, scheduled tasks (cron and systemd path/timer units); and container breakouts via misconfigured bind mounts.</li>
+        <li><strong>Web Application Security:</strong> discovery and chained exploitation of critical attack surfaces: Server-Side Request Forgery (SSRF), Server-Side Template Injection (SSTI) to Remote Code Execution (RCE), stacked and blind SQL injections, in-band XML External Entities (XXE), and session poisoning.</li>
+        <li><strong>AI Agent Security:</strong> threat modeling of agentic architectures: indirect prompt injection via RAG poisoning, heuristic filter evasion & jailbreaking, reasoning flow manipulation, and tool-calling abuse targeting internal services.</li>
+        <li><strong>AI Agent Engineering & MCP:</strong> building custom servers adhering to the Model Context Protocol (MCP) in Python; multi-agent orchestration with strict role segregation (architect, coder, reviewer), and autonomous execution pipelines.</li>
+        <li><strong>Browser Automation & Anti-Bot Evasion:</strong> programmatic engine control via Chrome DevTools Protocol (CDP); runtime fingerprint spoofing (canvas micro-noise, WebGL vendor, navigator.webdriver), keystroke Gaussian jitter, and cubic Bézier curves for human-like pointer interactions.</li>
+        <li><strong>Concurrency & Distributed Systems:</strong> architecting multi-threaded worker pools with global async task queues, per-thread session/cookie isolation, exponential backoff rate-limit handling, and real-time event telemetry.</li>
+        <li><strong>Microcontrollers & Embedded Firmware:</strong> bare-metal C/C++ firmware development; non-blocking state machine architectures with millisecond timers, full-duplex WebSocket communication, and low-power deep sleep management.</li>
+        <li><strong>Radio Frequency & Antennas:</strong> alignment and feedhorn calculation for microwave parabolic dishes (Ku and C bands), 2.4 GHz digital telemetry links, and signal analysis with Software-Defined Radio (SDR).</li>
+        <li><strong>Computer Graphics & Software Rendering:</strong> linear algebra applied to 3D perspective projections, 4x4 transformation matrices, backface culling, and Bresenham edge rasterization in real-time render loops written in C and SDL2.</li>
+        <li><strong>Defense, Hardening & Network Auditing:</strong> local socket attack surface reduction (restricting 0.0.0.0 listeners to loopback), legacy protocol mitigation, residential router firmware auditing, and AI-assisted host monitoring with automated alerting.</li>
+      </ul>
     </div>
   </section>
 
   <section aria-labelledby="h-practica">
-    <h2 id="h-practica"><span aria-hidden="true"><span class="ps">$</span> ls practica/</span><span class="sr">Práctica</span></h2>
+    <h2 id="h-practica">
+      <span class="es" aria-hidden="true"><span class="ps">$</span> ls practica/</span>
+      <span class="en" aria-hidden="true"><span class="ps">$</span> ls practice/</span>
+      <span class="sr">Práctica / Practice</span>
+    </h2>
     <div>
-      <p>Hack The Box: práctica autodidacta y continua en entornos de red, máquinas de temporada y retos avanzados.</p>
-      <p style="margin-top: 0.4rem; font-size: 0.88rem;">Perfil oficial verificado:
-        <a href="https://app.hackthebox.com/users/3419151" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">app.hackthebox.com/users/Damnz</a></p>
+      <p class="es">Hack The Box: práctica autodidacta y continua en entornos de red, máquinas de temporada y retos avanzados.</p>
+      <p class="en">Hack The Box: self-taught continuous practice across competitive enterprise networks, seasonal machines, and advanced labs.</p>
+      <p style="margin-top: 0.4rem; font-size: 0.88rem;">
+        <span class="es">Perfil oficial verificado:</span>
+        <span class="en">Verified public profile:</span>
+        <a href="https://app.hackthebox.com/users/3419151" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">app.hackthebox.com/users/Damnz</a>
+      </p>
     </div>
   </section>
 
   <section aria-labelledby="h-formacion">
-    <h2 id="h-formacion"><span aria-hidden="true"><span class="ps">$</span> cat formacion.txt</span><span class="sr">Formación</span></h2>
+    <h2 id="h-formacion">
+      <span class="es" aria-hidden="true"><span class="ps">$</span> cat formacion.txt</span>
+      <span class="en" aria-hidden="true"><span class="ps">$</span> cat education.txt</span>
+      <span class="sr">Formación / Education</span>
+    </h2>
     <div>
-      <p>Estudiante universitario.</p>
+      <p class="es">Estudiante universitario.</p>
+      <p class="en">University student.</p>
     </div>
   </section>
 
   <section aria-labelledby="h-contacto">
-    <h2 id="h-contacto"><span aria-hidden="true"><span class="ps">$</span> cat contacto</span><span class="sr">Contacto</span></h2>
+    <h2 id="h-contacto">
+      <span class="es" aria-hidden="true"><span class="ps">$</span> cat contacto</span>
+      <span class="en" aria-hidden="true"><span class="ps">$</span> cat contact</span>
+      <span class="sr">Contacto / Contact</span>
+    </h2>
     <div>
       <ul class="contact">
         <li><a href="https://github.com/damnz-dev" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">github.com/damnz-dev</a></li>
