@@ -1,0 +1,21 @@
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*~
+
+# Nunca versionar secretos ni notas locales
+.env
+.env.*
+*.key
+*.pem
+*.ovpn
+*.log
+notas/
+borradores/
+*.pdf
