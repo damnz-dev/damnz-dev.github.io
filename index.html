@@ -12,13 +12,15 @@
 <link rel="icon" href="data:,">
 <style>
 :root {
-  --bg: #0b0f14;
-  --sheet: #10161f;
-  --line: #1c2734;
+  --bg: #090d12;
+  --sheet: #0e131a;
+  --line: #1c2633;
   --text: #d2ecf4;
-  --muted: #6b8fa1;
+  --muted: #627d91;
   --accent: #5eead4;
-  --accent-dim: #134e4a;
+  --htb-green: #9fef00;
+  --htb-ruby: #ff2a5f;
+  --htb-lvl: #a855f7;
   --mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "Segoe UI Mono", Consolas, "Liberation Mono", Menlo, monospace;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -40,12 +42,14 @@ main {
   border-radius: 4px;
 }
 header {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+.header-top {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 1.25rem;
-  padding-bottom: 1.15rem;
-  border-bottom: 1px solid var(--line);
 }
 .header-left { flex: 1; min-width: 0; }
 .header-badge {
@@ -59,10 +63,13 @@ header {
   width: auto;
   border-radius: 4px;
   border: 1px solid var(--line);
-  background: #111923;
-  transition: border-color 0.15s ease;
+  background: #101721;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.header-badge a:hover img { border-color: var(--accent); }
+.header-badge a:hover img {
+  border-color: var(--htb-green);
+  box-shadow: 0 0 12px rgba(159, 239, 0, 0.2);
+}
 .header-badge a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 .pre {
   margin: 0;
@@ -71,12 +78,12 @@ header {
 }
 h1 {
   margin: 0.15rem 0 0.25rem;
-  font: 600 1.8rem/1.2 var(--mono);
+  font: 600 1.85rem/1.2 var(--mono);
   letter-spacing: -0.01em;
 }
 .tagline {
   margin: 0;
-  font: 0.9rem/1.4 var(--mono);
+  font: 0.92rem/1.4 var(--mono);
   color: var(--muted);
 }
 .tagline strong { color: var(--text); font-weight: 600; }
@@ -89,6 +96,51 @@ h1 {
   background: var(--accent);
 }
 .ps { color: var(--accent); }
+
+/* Banner / Tarjeta de Telemetría HTB */
+.htb-banner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.65rem;
+  margin-top: 1rem;
+  padding: 0.75rem 0.9rem;
+  background: #06090d;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: var(--mono);
+}
+.htb-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.2rem 0.4rem;
+  border-left: 2px solid var(--line);
+}
+.htb-stat:first-child { border-left-color: var(--htb-green); }
+.htb-stat:nth-child(2) { border-left-color: var(--htb-ruby); }
+.htb-stat:nth-child(3) { border-left-color: var(--accent); }
+.htb-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.htb-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.htb-value .green { color: var(--htb-green); }
+.htb-value .ruby { color: var(--htb-ruby); }
+.htb-value .cyan { color: var(--accent); }
+.htb-sub {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
 section {
   display: grid;
   grid-template-columns: 11.5rem 1fr;
@@ -119,39 +171,6 @@ li strong { font-weight: 600; }
 .contact { font-family: var(--mono); font-size: 0.88rem; }
 .contact li::before { content: ">"; }
 
-/* Tarjeta de temporada HTB */
-.htb-metrics {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 0.5rem;
-  margin: 0.65rem 0 0.5rem;
-  font-family: var(--mono);
-  font-size: 0.8rem;
-}
-.metric-box {
-  background: #0a0e13;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  padding: 0.45rem 0.6rem;
-}
-.metric-title {
-  color: var(--muted);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.15rem;
-}
-.metric-val {
-  color: var(--accent);
-  font-weight: 600;
-  font-size: 0.88rem;
-}
-.metric-val.ruby { color: #f43f5e; }
-.metric-sub {
-  color: var(--muted);
-  font-size: 0.72rem;
-}
-
 a {
   color: var(--accent);
   text-decoration: underline;
@@ -175,10 +194,11 @@ a:focus-visible {
 }
 @media (max-width: 640px) {
   main { margin: 0; padding: 1.5rem 1.15rem; border: 0; border-radius: 0; }
-  header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .header-top { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .htb-banner { grid-template-columns: 1fr; gap: 0.6rem; }
+  .htb-stat { border-left-width: 2px; }
   h1 { font-size: 1.5rem; }
   section { grid-template-columns: 1fr; gap: 0.35rem; }
-  .htb-metrics { grid-template-columns: 1fr 1fr; }
 }
 @page { size: A4; margin: 9mm; }
 @media print {
@@ -187,10 +207,10 @@ a:focus-visible {
     --text: #000; --muted: #111; --accent: #000;
   }
   html, body { background: #fff; color: #000; }
-  body { font-size: 7.9pt; line-height: 1.26; }
+  body { font-size: 7.8pt; line-height: 1.25; }
   main { max-width: none; margin: 0; padding: 0; border: 0; }
   header { padding-bottom: 1.2mm; }
-  .header-badge { display: none; }
+  .header-badge, .htb-banner { display: none; }
   h1 { font-size: 13.5pt; margin: 0.5mm 0; }
   .pre { font-size: 7pt; }
   .tagline { font-size: 8pt; }
@@ -199,7 +219,6 @@ a:focus-visible {
   h2 { font-size: 7.6pt; font-weight: 700; }
   p { margin: 0 0 0.8mm; }
   li { font-size: 7.8pt; line-height: 1.22; margin-bottom: 0.6mm; padding-left: 2.5mm; }
-  .htb-metrics { display: none; }
   .contact { font-size: 7.6pt; }
   .contact li { margin-bottom: 0.4mm; }
   a { color: #000; text-decoration: none; }
@@ -209,15 +228,36 @@ a:focus-visible {
 <body>
 <main>
   <header>
-    <div class="header-left">
-      <p class="pre" aria-hidden="true">$ whoami</p>
-      <h1>~/damnz</h1>
-      <p class="tagline"><strong>DAMNZ</strong> · Operador ofensivo · Red Team<span class="cursor" aria-hidden="true"></span></p>
+    <div class="header-top">
+      <div class="header-left">
+        <p class="pre" aria-hidden="true">$ whoami</p>
+        <h1>~/damnz</h1>
+        <p class="tagline"><strong>DAMNZ</strong> · Operador ofensivo · Red Team<span class="cursor" aria-hidden="true"></span></p>
+      </div>
+      <div class="header-badge">
+        <a href="https://app.hackthebox.com/users/3419151" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer" title="Perfil oficial en Hack The Box">
+          <img src="https://www.hackthebox.com/badge/image/3419151" alt="Hack The Box Badge - Damnz" width="200" height="48">
+        </a>
+      </div>
     </div>
-    <div class="header-badge">
-      <a href="https://app.hackthebox.com/users/3419151" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer" title="Perfil oficial en Hack The Box">
-        <img src="https://www.hackthebox.com/badge/image/3419151" alt="Hack The Box Badge - Damnz" width="200" height="48">
-      </a>
+
+    <!-- Banner superior integrado de Hack The Box -->
+    <div class="htb-banner" aria-label="Métricas de Hack The Box">
+      <div class="htb-stat">
+        <span class="htb-label">Rango Global</span>
+        <span class="htb-value"><span class="green">Pro Hacker</span></span>
+        <span class="htb-sub">Nivel 38 · Skilled</span>
+      </div>
+      <div class="htb-stat">
+        <span class="htb-label">Season 12</span>
+        <span class="htb-value"><span class="ruby">Ruby Tier</span> <span style="font-size: 0.8rem; font-weight: normal; color: var(--muted);">#1657</span></span>
+        <span class="htb-sub">320 pts · 8 flags</span>
+      </div>
+      <div class="htb-stat">
+        <span class="htb-label">Racha Activa</span>
+        <span class="htb-value"><span class="cyan">5 Semanas</span></span>
+        <span class="htb-sub">Práctica continua</span>
+      </div>
     </div>
   </header>
 
@@ -250,27 +290,8 @@ a:focus-visible {
   <section aria-labelledby="h-practica">
     <h2 id="h-practica"><span aria-hidden="true"><span class="ps">$</span> ls practica/</span><span class="sr">Práctica</span></h2>
     <div>
-      <p>Hack The Box: práctica autodidacta y continua en máquinas competitivas. Telemetría de perfil público:</p>
-      
-      <div class="htb-metrics">
-        <div class="metric-box">
-          <div class="metric-title">Rango Global</div>
-          <div class="metric-val">Pro Hacker</div>
-          <div class="metric-sub">Nivel 38 · Skilled</div>
-        </div>
-        <div class="metric-box">
-          <div class="metric-title">Season 12</div>
-          <div class="metric-val ruby">Ruby Tier</div>
-          <div class="metric-sub">Rank #1657 · 320 pts</div>
-        </div>
-        <div class="metric-box">
-          <div class="metric-title">Racha Activa</div>
-          <div class="metric-val">5 Semanas</div>
-          <div class="metric-sub">Consistencia continua</div>
-        </div>
-      </div>
-
-      <p style="margin-top: 0.5rem; font-size: 0.88rem;">Perfil oficial verificado:
+      <p>Hack The Box: práctica autodidacta y continua en entornos de red, máquinas de temporada y retos avanzados.</p>
+      <p style="margin-top: 0.4rem; font-size: 0.88rem;">Perfil oficial verificado:
         <a href="https://app.hackthebox.com/users/3419151" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">app.hackthebox.com/users/Damnz</a></p>
     </div>
   </section>
