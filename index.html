@@ -175,6 +175,20 @@ h1 {
   font-size: 0.72rem;
   color: var(--muted);
 }
+.htb-status-banner {
+  margin-top: 0.85rem;
+  padding: 0.55rem 0.85rem;
+  background: rgba(255, 42, 95, 0.08);
+  border: 1px solid var(--htb-ruby);
+  border-left: 3px solid var(--htb-ruby);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--htb-ruby);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 
 section {
   display: grid;
@@ -295,12 +309,15 @@ a:focus-visible {
         <label for="lang-toggle" class="lang-btn" title="Cambiar idioma / Switch language" tabindex="0">
           <span class="opt-es active">ES</span>/<span class="opt-en">EN</span>
         </label>
-        <div class="header-badge">
-          <a href="https://app.hackthebox.com/users/3419151" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer" title="Perfil oficial en Hack The Box">
-            <img src="https://www.hackthebox.com/badge/image/3419151" alt="Hack The Box Badge - Damnz" width="200" height="48">
-          </a>
+        <div class="header-badge" title="Acceso HTB bloqueado temporalmente">
+          <span style="display:inline-block;padding:0.45rem 0.75rem;border:1px solid var(--htb-ruby);border-radius:4px;font-family:var(--mono);font-size:0.74rem;color:var(--htb-ruby);background:rgba(255,42,95,0.08);">[HTB] bloqueado por fallas en htb</span>
         </div>
       </div>
+    </div>
+
+    <!-- Aviso de estado HTB -->
+    <div class="htb-status-banner" role="status">
+      <strong>[!]</strong> <span>Acceso a Hack The Box: <strong>bloqueado por fallas en htb</strong></span>
     </div>
 
     <!-- Banner superior integrado de Hack The Box -->
@@ -327,7 +344,7 @@ a:focus-visible {
       <div class="htb-stat">
         <span class="htb-label es">Ranking Nacional</span>
         <span class="htb-label en">National Rank</span>
-        <span class="htb-value"><a href="https://app.hackthebox.com/rankings/countries/CL" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer" style="color: inherit; text-decoration: none;"><span class="green">Top 5 · Chile</span></a></span>
+        <span class="htb-value"><span class="green">Top 5 · Chile</span></span>
         <span class="htb-sub">HTB Leaderboard (CL) ↗</span>
       </div>
     </div>
@@ -394,7 +411,7 @@ a:focus-visible {
         <span class="en">Writeups &amp; verified profiles:</span>
         <a href="https://github.com/damnz-dev/sherlocks-writeups" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">sherlocks-writeups</a> ·
         <a href="https://github.com/damnz-dev/writeups" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">machines writeups</a> ·
-        <a href="https://app.hackthebox.com/users/3419151" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">app.hackthebox.com/users/Damnz</a>
+        <span style="color: var(--htb-ruby); font-family: var(--mono); font-size: 0.85em;">HTB: bloqueado por fallas en htb</span>
       </p>
     </div>
   </section>
@@ -420,7 +437,7 @@ a:focus-visible {
     <div>
       <ul class="contact">
         <li><a href="https://github.com/damnz-dev" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">github.com/damnz-dev</a></li>
-        <li><a href="https://app.hackthebox.com/users/3419151" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">app.hackthebox.com/users/Damnz</a></li>
+        <li><span style="color: var(--htb-ruby); font-family: var(--mono); font-size: 0.85em;">HTB: bloqueado por fallas en htb</span></li>
       </ul>
     </div>
   </section>
